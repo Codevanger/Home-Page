@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>CodeVanger Homepage</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://unpkg.com/xp.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js"></script>
+  </head>
+
+  <body>
+    <div class="background" id="background">
+      <div class="window about-me" id="aboutMe">
+        <div class="title-bar">
+          <div class="title-bar-text">About me</div>
+
+          <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <section class="tabs">
+            <menu role="tablist" aria-label="Tabs">
+              <button role="tab" aria-selected="true" aria-controls="General">
+                General
+              </button>
+              <button role="tab" aria-controls="Hobbies">Hobbies</button>
+              <button role="tab" aria-controls="Contacts">Contacts</button>
+            </menu>
+            <article role="tabpanel" id="General">
+              <h3>Hello! 👋</h3>
+
+              <p>My name is <b>Igor</b>. I'm from Kaliningrad, Russia.</p>
+              <p>
+                I'm a <b>TypeScript / Javascript</b> engineer with 5 years
+                experience.
+              </p>
+
+              <p>
+                I'm a
+                <b>full-stack</b> developer, but I prefer to work on
+                <b>frontend</b> side.
+              </p>
+
+              <p>Waiting for WinXP and Web 1.0 style comeback 🤞</p>
+
+              <p>My favorite game - Vangers</p>
+            </article>
+
+            <article role="tabpanel" id="Hobbies" hidden>
+              <ul>
+                <li>Programming 💻</li>
+                <li>Gaming 🎮</li>
+                <li>Board games 🎲</li>
+                <li>Plastic modeling 🛠</li>
+                <li>Reading 📖</li>
+              </ul>
+            </article>
+
+            <article role="tabpanel" id="Contacts" hidden>
+              <b>You can find or contact me here</b>
+              <ul>
+                <li>
+                  <a href="https://github.com/Codevanger" target="_blank">
+                    Github
+                  </a>
+                </li>
+                <li>
+                  <a href="https://t.me/Codevanger" target="_blank">Telegram</a>
+                </li>
+                <li>
+                  <a href="https://discord.com/" target="_blank">Discord</a> -
+                  Vanger#6903
+                </li>
+                <li>
+                  <a
+                    href="https://www.linkedin.com/in/codevanger/"
+                    target="_blank"
+                  >
+                    LinkedIn
+                  </a>
+                </li>
+                <li>
+                  <a href="https://vk.com/codevanger" target="_blank">VK</a>
+                </li>
+                <li>
+                  <a
+                    href="https://steamcommunity.com/id/vangergo"
+                    target="_blank"
+                  >
+                    Steam
+                  </a>
+                </li>
+                <li>
+                  <a href="mailto:codevanger@gmail.com">Email</a>
+                </li>
+              </ul>
+            </article>
+          </section>
+        </div>
+
+        <div class="status-bar">
+          <p class="status-bar-field">Press F1 for help</p>
+        </div>
+      </div>
+
+      <div class="window about-projects" id="aboutProjects">
+        <div class="title-bar">
+          <div class="title-bar-text">About projects</div>
+
+          <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <h4>There's list of my <b>Non-NDA</b> projects</h4>
+
+          <ul class="tree-view">
+            <li>
+              <b>TypeMUD</b> — MUD / MMO Roguelike platform, written on TS / JS.
+              Client, Server and WebAPI.
+              <ul>
+                <li><b>Client</b> - Angular, Electron, PrimeNG</li>
+                <li><b>Server</b> - Deno, denodb</li>
+                <li><b>WebAPI</b> - NestJS, TypeORM</li>
+              </ul>
+            </li>
+            <li>
+              <b>This site!</b> — My personal site, written on JS with help of
+              <b><a href="https://github.com/botoxparty/XP.css">XP.css</a></b>
+            </li>
+          </ul>
+
+          <h4>Technologies that I use</h4>
+
+          <ul class="tree-view">
+            <li>
+              <b> Frontend </b>
+              <ul>
+                <li><b>Angular</b> — 5+ years</li>
+                <li><b>Electron</b> — 3 years</li>
+                <li><b>Ionic</b> — 3 years</li>
+              </ul>
+            </li>
+            <li>
+              <b> Backend </b>
+              <ul>
+                <li><b>NestJS</b> — 2 years</li>
+                <li><b>Node.js</b> — 2 years</li>
+                <li><b>.Net Core</b> — 1 year (not using it anymore)</li>
+              </ul>
+            </li>
+            <li>
+              <b> Database </b>
+              <ul>
+                <li><b>MS SQL</b> — 2 years</li>
+                <li><b>SQLite</b> — 1 years</li>
+                <li><b>MySQL</b> — 1 years</li>
+              </ul>
+            </li>
+            <li>
+              <b>CI/CD</b>
+              <ul>
+                <li><b>Jenkins</b> — 1 year</li>
+                <li><b>Docket</b> — 1 year</li>
+                <li><b>Drone CI</b> — 1 years</li>
+              </ul>
+            </li>
+            <li>
+              <b> Other </b>
+              <ul>
+                <li><b>Git</b> — 5 years</li>
+                <li><b>Linux</b> — 1 year</li>
+                <li><b>Nginx</b> — 2 years</li>
+                <li><b>Postman</b> — 1 year</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="window dancing-cat" style="display: none" id="dancingCat">
+        <div class="title-bar">
+          <div class="title-bar-text">Dancing cat</div>
+
+          <div class="title-bar-controls">
+            <button aria-label="Minimize"></button>
+            <button aria-label="Close"></button>
+          </div>
+        </div>
+        <div class="window-body">
+          <img
+            src="https://media.tenor.com/GU-otnw1RB0AAAAC/dancing-cat.gif"
+            alt="Dancing cat"
+          />
+        </div>
+      </div>
+
+      <div class="taskbar">
+        <div class="time">
+          <span id="time">0:00</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

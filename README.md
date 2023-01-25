@@ -1,7 +1,7 @@
 # codevanger.github.io
 It's small, but honest work
 
-License
+## License
 
 The Windows XP name, artwork, trademark are surely property of Microsoft.
 This project is provided for educational purposes only. 

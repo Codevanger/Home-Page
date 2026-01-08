@@ -210,7 +210,7 @@ function initTime() {
 function updateTime(timeSpan) {
   const date = new Date();
   const hours = date.getHours();
-  const minutes = date.getMinutes();
+  const minutes = date.getMinutes().toString().padStart(2, '0');
 
   timeSpan.innerHTML = `${hours}:${minutes}`;
 }

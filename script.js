@@ -6,158 +6,256 @@ document.onreadystatechange = (event) => {
   initTime();
 };
 
+const WINDOW_CONFIGS = [
+  {
+    id: "aboutMe",
+    label: "About me",
+    icon: "icons/about-me.png",
+    closable: true,
+    minimizable: true,
+    visible: true,
+    hotkeysWhenActive: {
+      F1: (api) => api.show("dancingCat"),
+    },
+  },
+  {
+    id: "aboutProjects",
+    label: "About projects",
+    icon: "icons/about-projects.png",
+    closable: true,
+    minimizable: true,
+    visible: true,
+  },
+  {
+    id: "dancingCat",
+    label: "Dancing cat",
+    closable: true,
+    minimizable: true,
+    visible: false,
+  },
+];
+
 function initWindows() {
-  const aboutMe = document.getElementById("aboutMe");
-  const aboutProjects = document.getElementById("aboutProjects");
-  const dancingCat = document.getElementById("dancingCat");
   const background = document.getElementById("background");
+  const taskbarContainer = document.getElementById("taskbarButtons");
+  const desktopContainer = document.getElementById("desktopIcons");
+  const manager = createWindowManager(WINDOW_CONFIGS, taskbarContainer);
+
+  initDesktopIcons(manager, desktopContainer);
 
   background.addEventListener("click", () => {
-    aboutMe.style.zIndex = 0;
-    aboutProjects.style.zIndex = 0;
-
-    aboutMe.classList.remove("active");
-    aboutProjects.classList.remove("active");
+    manager.unfocusAll();
+    deselectDesktopIcons(desktopContainer);
   });
 
-  aboutMe.addEventListener("click", (event) => {
-    event.stopPropagation();
-
-    aboutMe.style.zIndex = 1000;
-    aboutProjects.style.zIndex = 0;
-    dancingCat.style.zIndex = 0;
-
-    aboutMe.classList.add("active");
-    aboutProjects.classList.remove("active");
-    dancingCat.classList.remove("active");
-  });
-
-  aboutProjects.addEventListener("click", (event) => {
-    event.stopPropagation();
-
-    aboutMe.style.zIndex = 0;
-    aboutProjects.style.zIndex = 1000;
-    dancingCat.style.zIndex = 0;
-
-    aboutMe.classList.remove("active");
-    aboutProjects.classList.add("active");
-    dancingCat.classList.remove("active");
-  });
-
-  dancingCat.addEventListener("click", (event) => {
-    event.stopPropagation();
-
-    aboutMe.style.zIndex = 0;
-    aboutProjects.style.zIndex = 0;
-    dancingCat.style.zIndex = 1000;
-
-    aboutMe.classList.remove("active");
-    aboutProjects.classList.remove("active");
-    dancingCat.classList.add("active");
-  });
-
-  aboutMe
-    .getElementsByClassName("title-bar")[0]
-    .addEventListener("mousedown", (event) => {
+  for (const win of manager.windows) {
+    win.element.addEventListener("click", (event) => {
       event.stopPropagation();
-
-      let lastX = event.clientX;
-      let lastY = event.clientY;
-
-      function onMouseMove(event) {
-        const deltaX = event.clientX - lastX;
-        const deltaY = event.clientY - lastY;
-
-        aboutMe.style.left = `${aboutMe.offsetLeft + deltaX}px`;
-        aboutMe.style.top = `${aboutMe.offsetTop + deltaY}px`;
-
-        lastX = event.clientX;
-        lastY = event.clientY;
-      }
-
-      document.addEventListener("mousemove", onMouseMove);
-
-      aboutMe.onmouseup = function () {
-        document.removeEventListener("mousemove", onMouseMove);
-        aboutMe.onmouseup = null;
-      };
+      manager.focus(win.config.id);
     });
 
-  aboutProjects
-    .getElementsByClassName("title-bar")[0]
-    .addEventListener("mousedown", (event) => {
-      event.stopPropagation();
+    makeDraggable(win.element, () => manager.focus(win.config.id));
 
-      aboutMe.style.zIndex = 0;
+    const controls = win.element.querySelector(".title-bar .title-bar-controls");
+    const minBtn = controls.querySelector('[aria-label="Minimize"]');
+    const closeBtn = controls.querySelector('[aria-label="Close"]');
 
-      let lastX = event.clientX;
-      let lastY = event.clientY;
+    if (win.config.minimizable) {
+      minBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        manager.minimize(win.config.id);
+      });
+    } else {
+      minBtn.style.display = "none";
+    }
 
-      function onMouseMove(event) {
-        const deltaX = event.clientX - lastX;
-        const deltaY = event.clientY - lastY;
-
-        aboutProjects.style.left = `${aboutProjects.offsetLeft + deltaX}px`;
-        aboutProjects.style.top = `${aboutProjects.offsetTop + deltaY}px`;
-
-        lastX = event.clientX;
-        lastY = event.clientY;
-      }
-
-      document.addEventListener("mousemove", onMouseMove);
-
-      aboutProjects.onmouseup = function () {
-        document.removeEventListener("mousemove", onMouseMove);
-        aboutProjects.onmouseup = null;
-      };
-    });
-
-  dancingCat
-    .getElementsByClassName("title-bar")[0]
-    .addEventListener("mousedown", (event) => {
-      event.stopPropagation();
-
-      aboutMe.style.zIndex = 0;
-
-      let lastX = event.clientX;
-      let lastY = event.clientY;
-
-      function onMouseMove(event) {
-        const deltaX = event.clientX - lastX;
-        const deltaY = event.clientY - lastY;
-
-        dancingCat.style.left = `${dancingCat.offsetLeft + deltaX}px`;
-        dancingCat.style.top = `${dancingCat.offsetTop + deltaY}px`;
-
-        lastX = event.clientX;
-        lastY = event.clientY;
-      }
-
-      document.addEventListener("mousemove", onMouseMove);
-
-      dancingCat.onmouseup = function () {
-        document.removeEventListener("mousemove", onMouseMove);
-        dancingCat.onmouseup = null;
-      };
-    });
-
-  const dancingCatButtons = document.getElementsByTagName("button");
-
-  for (let x of dancingCatButtons) {
-    x.addEventListener("click", () => {
-      dancingCat.style.display = "none";
-    });
+    if (win.config.closable) {
+      closeBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        manager.close(win.config.id);
+      });
+    } else {
+      closeBtn.style.display = "none";
+    }
   }
 
-  // F1 hotkey
   document.addEventListener("keydown", (event) => {
-    if (event.key !== "F1") {
-      return;
+    const active = manager.windows.find(
+      (w) => w.state === "open" && w.element.classList.contains("active")
+    );
+    if (!active || !active.config.hotkeysWhenActive) return;
+    const handler = active.config.hotkeysWhenActive[event.key];
+    if (handler) {
+      event.preventDefault();
+      handler(manager);
+    }
+  });
+
+  manager.render();
+}
+
+function initDesktopIcons(manager, container) {
+  for (const win of manager.windows) {
+    if (!win.config.icon) continue;
+
+    const icon = document.createElement("div");
+    icon.className = "desktop-icon";
+    icon.dataset.windowId = win.config.id;
+
+    const img = document.createElement("img");
+    img.src = win.config.icon;
+    img.alt = "";
+    img.draggable = false;
+
+    const label = document.createElement("span");
+    label.textContent = win.config.label;
+
+    icon.append(img, label);
+
+    icon.addEventListener("click", (event) => {
+      event.stopPropagation();
+      deselectDesktopIcons(container, icon);
+      icon.classList.add("selected");
+    });
+
+    icon.addEventListener("dblclick", (event) => {
+      event.stopPropagation();
+      icon.classList.remove("selected");
+      manager.show(win.config.id);
+    });
+
+    container.appendChild(icon);
+  }
+}
+
+function deselectDesktopIcons(container, except) {
+  for (const el of container.querySelectorAll(".desktop-icon.selected")) {
+    if (el !== except) el.classList.remove("selected");
+  }
+}
+
+function createWindowManager(configs, taskbarContainer) {
+  const windows = configs.map((config) => ({
+    config,
+    element: document.getElementById(config.id),
+    state: config.visible ? "open" : "closed",
+  }));
+
+  for (const w of windows) setState(w, w.state);
+
+  function setState(win, newState) {
+    win.state = newState;
+    if (newState === "open") {
+      win.element.style.display = "";
+    } else {
+      win.element.style.display = "none";
+      win.element.classList.remove("active");
+      win.element.style.zIndex = 0;
+    }
+  }
+
+  function get(id) {
+    return windows.find((w) => w.config.id === id);
+  }
+
+  function focus(id) {
+    const target = get(id);
+    if (!target || target.state === "closed") return;
+    if (target.state === "minimized") setState(target, "open");
+    for (const w of windows) {
+      const isTarget = w === target;
+      w.element.style.zIndex = isTarget ? 1000 : 0;
+      w.element.classList.toggle("active", isTarget);
+    }
+    render();
+  }
+
+  function show(id) {
+    const w = get(id);
+    if (!w) return;
+    setState(w, "open");
+    focus(id);
+  }
+
+  function minimize(id) {
+    const w = get(id);
+    if (!w || w.state !== "open") return;
+    setState(w, "minimized");
+    render();
+  }
+
+  function close(id) {
+    const w = get(id);
+    if (!w || w.state === "closed") return;
+    setState(w, "closed");
+    render();
+  }
+
+  function unfocusAll() {
+    for (const w of windows) {
+      w.element.style.zIndex = 0;
+      w.element.classList.remove("active");
+    }
+    render();
+  }
+
+  function render() {
+    taskbarContainer.innerHTML = "";
+    for (const win of windows) {
+      if (win.state === "closed") continue;
+      const btn = document.createElement("button");
+      btn.textContent = win.config.label;
+      btn.dataset.windowId = win.config.id;
+      if (win.state === "minimized") btn.classList.add("minimized");
+      if (win.element.classList.contains("active")) btn.classList.add("active");
+      btn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (win.state === "minimized") {
+          show(win.config.id);
+        } else if (win.element.classList.contains("active")) {
+          minimize(win.config.id);
+        } else {
+          focus(win.config.id);
+        }
+      });
+      taskbarContainer.appendChild(btn);
+    }
+  }
+
+  return { windows, get, focus, show, minimize, close, unfocusAll, render };
+}
+
+function makeDraggable(element, onDragStart) {
+  const titleBar = element.getElementsByClassName("title-bar")[0];
+
+  titleBar.addEventListener("mousedown", (event) => {
+    if (event.target.closest(".title-bar-controls")) return;
+    event.stopPropagation();
+    onDragStart?.();
+
+    let lastX = event.clientX;
+    let lastY = event.clientY;
+
+    function onMouseMove(event) {
+      const deltaX = event.clientX - lastX;
+      const deltaY = event.clientY - lastY;
+
+      element.style.left = `${element.offsetLeft + deltaX}px`;
+      element.style.top = `${element.offsetTop + deltaY}px`;
+
+      lastX = event.clientX;
+      lastY = event.clientY;
     }
 
-    if (aboutMe.classList.contains("active")) {
-      dancingCat.style.display = "block";
+    function onMouseUp() {
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+      document.removeEventListener("mouseleave", onMouseUp);
     }
+
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("mouseleave", onMouseUp);
   });
 }
 

@@ -1,172 +1,345 @@
 .about-me {
-    width: 350px;
-    top: 5%;
-    left: 5%;
+  width: 350px;
+  top: 5%;
+  left: 5%;
 
-    position: absolute;
+  position: absolute;
 }
 
 .about-projects {
-    width: 550px;
-    top: 25%;
-    left: 65%;
+  width: 550px;
+  top: 25%;
+  left: 65%;
 
-    position: absolute;
+  position: absolute;
 }
 
 .dancing-cat {
-    width: 335px;
-    top: 50%;
-    left: 50%;
+  width: 335px;
+  top: 50%;
+  left: 50%;
 
-    position: absolute;
+  position: absolute;
 }
 
 .about-projects .tree-view {
-    max-height: 300px;
-    overflow-y: scroll;
+  max-height: 300px;
+  overflow-y: scroll;
 }
 
-
 body {
-    width: 100vw;
-    height: 100vh;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
 
 /* Windows XP style background */
 .background {
-    background: url("https://i.imgur.com/vX7ul7v.jpeg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    height: 100%;
-    width: 100%;
+  background: url("https://i.imgur.com/vX7ul7v.jpeg") no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
 
-    max-width: 100vw;
+  max-width: 100vw;
 
-    overflow: hidden;
+  overflow: hidden;
+}
+
+/* Desktop icons < windows < active window < taskbar. */
+.window {
+  z-index: 2;
+}
+.window.active {
+  z-index: 3;
 }
 
 .window:not(.active) .title-bar {
-    background: linear-gradient(rgb(31, 47, 134) 0px, rgb(49, 101, 196) 3%, rgb(54, 130, 229) 6%, rgb(68, 144, 230) 10%, rgb(56, 131, 229) 12%, rgb(43, 113, 224) 15%, rgb(38, 99, 218) 18%, rgb(35, 91, 214) 20%, rgb(34, 88, 213) 23%, rgb(33, 87, 214) 38%, rgb(36, 93, 219) 54%, rgb(37, 98, 223) 86%, rgb(36, 95, 220) 89%, rgb(33, 88, 212) 92%, rgb(29, 78, 192) 95%, rgb(25, 65, 165) 98%);
+  background: linear-gradient(
+    rgb(31, 47, 134) 0px,
+    rgb(49, 101, 196) 3%,
+    rgb(54, 130, 229) 6%,
+    rgb(68, 144, 230) 10%,
+    rgb(56, 131, 229) 12%,
+    rgb(43, 113, 224) 15%,
+    rgb(38, 99, 218) 18%,
+    rgb(35, 91, 214) 20%,
+    rgb(34, 88, 213) 23%,
+    rgb(33, 87, 214) 38%,
+    rgb(36, 93, 219) 54%,
+    rgb(37, 98, 223) 86%,
+    rgb(36, 95, 220) 89%,
+    rgb(33, 88, 212) 92%,
+    rgb(29, 78, 192) 95%,
+    rgb(25, 65, 165) 98%
+  );
 }
 
 /* WinXP style */
 .taskbar {
-    height: 30px;
-    background: linear-gradient(rgb(31, 47, 134) 0px, rgb(49, 101, 196) 3%, rgb(54, 130, 229) 6%, rgb(68, 144, 230) 10%, rgb(56, 131, 229) 12%, rgb(43, 113, 224) 15%, rgb(38, 99, 218) 18%, rgb(35, 91, 214) 20%, rgb(34, 88, 213) 23%, rgb(33, 87, 214) 38%, rgb(36, 93, 219) 54%, rgb(37, 98, 223) 86%, rgb(36, 95, 220) 89%, rgb(33, 88, 212) 92%, rgb(29, 78, 192) 95%, rgb(25, 65, 165) 98%);
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    left: 0px;
-    display: flex;
+  z-index: 4;
+  height: 30px;
+  background: linear-gradient(
+    rgb(31, 47, 134) 0px,
+    rgb(49, 101, 196) 3%,
+    rgb(54, 130, 229) 6%,
+    rgb(68, 144, 230) 10%,
+    rgb(56, 131, 229) 12%,
+    rgb(43, 113, 224) 15%,
+    rgb(38, 99, 218) 18%,
+    rgb(35, 91, 214) 20%,
+    rgb(34, 88, 213) 23%,
+    rgb(33, 87, 214) 38%,
+    rgb(36, 93, 219) 54%,
+    rgb(37, 98, 223) 86%,
+    rgb(36, 95, 220) 89%,
+    rgb(33, 88, 212) 92%,
+    rgb(29, 78, 192) 95%,
+    rgb(25, 65, 165) 98%
+  );
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  display: flex;
 }
 
 .taskbar div.time {
-    background: linear-gradient(rgb(12, 89, 185) 1%, rgb(19, 158, 233) 6%, rgb(24, 181, 242) 10%, rgb(19, 155, 235) 14%, rgb(18, 144, 232) 19%, rgb(13, 141, 234) 63%, rgb(13, 159, 241) 81%, rgb(15, 158, 237) 88%, rgb(17, 155, 233) 91%, rgb(19, 146, 226) 94%, rgb(19, 126, 215) 97%, rgb(9, 91, 201) 100%);
-    width: 100px;
-    height: 30px;
-    position: absolute;
-    right: 0px;
+  background: linear-gradient(
+    rgb(12, 89, 185) 1%,
+    rgb(19, 158, 233) 6%,
+    rgb(24, 181, 242) 10%,
+    rgb(19, 155, 235) 14%,
+    rgb(18, 144, 232) 19%,
+    rgb(13, 141, 234) 63%,
+    rgb(13, 159, 241) 81%,
+    rgb(15, 158, 237) 88%,
+    rgb(17, 155, 233) 91%,
+    rgb(19, 146, 226) 94%,
+    rgb(19, 126, 215) 97%,
+    rgb(9, 91, 201) 100%
+  );
+  width: 100px;
+  height: 30px;
+  position: absolute;
+  right: 0px;
 }
 
 div.time span#time {
-    color: white;
-    font-size: 12px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .taskbar-buttons {
-    flex: 1;
-    display: flex;
-    gap: 3px;
-    padding: 3px 100px 3px 4px;
-    overflow: hidden;
-    align-items: stretch;
+  flex: 1;
+  display: flex;
+  gap: 3px;
+  padding: 3px 100px 3px 4px;
+  overflow: hidden;
+  align-items: stretch;
 }
 
 .taskbar-buttons button {
-    flex: 0 1 160px;
-    min-width: 40px;
-    color: white;
-    font-family: inherit;
-    font-size: 11px;
-    font-weight: bold;
-    text-align: left;
-    padding: 0 8px;
-    border: 1px solid rgba(0, 0, 0, 0.35);
-    border-radius: 2px;
-    cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    background: linear-gradient(to bottom, rgb(83, 156, 234) 0%, rgb(54, 122, 213) 50%, rgb(46, 110, 204) 51%, rgb(60, 137, 224) 100%);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  flex: 0 1 160px;
+  min-width: 40px;
+  color: white;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: left;
+  padding: 0 8px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  border-radius: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: linear-gradient(
+    to bottom,
+    rgb(83, 156, 234) 0%,
+    rgb(54, 122, 213) 50%,
+    rgb(46, 110, 204) 51%,
+    rgb(60, 137, 224) 100%
+  );
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 .taskbar-buttons button.active {
-    background: linear-gradient(to bottom, rgb(28, 65, 145) 0%, rgb(38, 86, 175) 50%, rgb(45, 99, 192) 51%, rgb(55, 120, 211) 100%);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(
+    to bottom,
+    rgb(28, 65, 145) 0%,
+    rgb(38, 86, 175) 50%,
+    rgb(45, 99, 192) 51%,
+    rgb(55, 120, 211) 100%
+  );
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .taskbar-buttons button.minimized {
-    font-style: italic;
-    opacity: 0.85;
+  font-style: italic;
+  opacity: 0.85;
 }
 
 .desktop-icons {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    z-index: 1;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1;
 }
 
 .desktop-icon {
-    width: 80px;
-    padding: 4px 2px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    border: 1px dotted transparent;
-    user-select: none;
+  width: 80px;
+  padding: 4px 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  border: 1px dotted transparent;
+  user-select: none;
 }
 
 .desktop-icon img {
-    width: 48px;
-    height: 48px;
-    pointer-events: none;
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
 }
 
 .desktop-icon span {
-    color: white;
-    font-size: 11px;
-    text-align: center;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
-    line-height: 1.2;
-    padding: 0 2px;
-    pointer-events: none;
+  color: white;
+  font-size: 11px;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+  line-height: 1.2;
+  padding: 0 2px;
+  pointer-events: none;
 }
 
 .desktop-icon.selected {
-    border-color: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .desktop-icon.selected img {
-    filter: brightness(0.85) sepia(0.4) hue-rotate(180deg) saturate(2);
+  filter: brightness(0.85) sepia(0.4) hue-rotate(180deg) saturate(2);
 }
 
 .desktop-icon.selected span {
-    background: rgb(11, 97, 213);
+  background: rgb(11, 97, 213);
+}
+/* Resume uses the same window manager and XP controls as the desktop. */
+.resume-window {
+  position: absolute;
+  top: 16%;
+  left: max(12px, calc(50% - 190px));
+  width: 380px;
+  max-width: calc(100vw - 24px);
+  box-sizing: border-box;
+}
+.resume-window .window-body {
+  padding: 10px;
+  max-height: calc(100dvh - 160px);
+  overflow-y: auto;
+}
+.resume-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.resume-heading strong {
+  font-size: 16px;
+}
+.resume-heading p {
+  margin: 6px 0 0;
+}
+.resume-window fieldset {
+  margin: 0;
+  padding: 12px;
+}
+.resume-window .field-row + .field-row {
+  margin-top: 10px;
+}
+#resumeStatus {
+  min-height: 30px;
+  line-height: 1.4;
+  margin: 14px 0 8px;
+}
+.resume-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 14px;
+}
+#resumeFormat {
+  margin-right: auto;
+  color: #555;
+}
+.resume-progress {
+  height: 16px;
+  padding: 2px;
+  overflow: hidden;
+  border: 1px solid #686868;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: inset 1px 1px 2px #bbb;
+}
+.resume-progress > div {
+  height: 100%;
+  width: 0;
+  background: repeating-linear-gradient(
+      to right,
+      transparent 0 8px,
+      #fff 8px 10px
+    ),
+    linear-gradient(#b7f18c, #33b32b 45%, #278821 55%, #8cdb59);
+}
+.resume-progress.indeterminate > div {
+  width: 30%;
+  animation: resume-loading 1.3s linear infinite;
+}
+.desktop-icon:focus-visible {
+  outline: 1px dotted white;
+  background: #0b61d566;
+}
+[hidden] {
+  display: none !important;
+}
+
+#resumeFooter {
+  white-space: normal;
+  line-height: 1.4;
+  padding: 5px 8px;
+}
+#resumeError {
+  color: #a40000;
+  margin: 12px 0 0;
+}
+
+@keyframes resume-loading {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(350%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .resume-progress.indeterminate > div {
+    animation: none;
+    width: 100%;
+    opacity: 0.5;
+  }
 }

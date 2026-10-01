@@ -3,8 +3,13 @@
   <head>
     <title>CodeVanger Homepage</title>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://unpkg.com/xp.css" />
     <link rel="stylesheet" href="./style.css" />
+    <script src="./resume-data.js"></script>
+    <script src="./vendor/jspdf.umd.min.js"></script>
+    <script src="./resume-pdf.js"></script>
+    <script src="./resume.js"></script>
     <script src="./script.js"></script>
   </head>
 
@@ -191,6 +196,20 @@
             alt="Dancing cat"
           />
         </div>
+      </div>
+
+      <div class="window resume-window" id="resume" style="display: none" role="dialog" aria-labelledby="resumeTitle" lang="en">
+        <div class="title-bar">
+          <div class="title-bar-text" id="resumeTitle">Resume — Igor Rybakov</div>
+          <div class="title-bar-controls"><button aria-label="Minimize"></button><button aria-label="Close"></button></div>
+        </div>
+        <div class="window-body">
+          <div class="resume-heading"><img src="icons/resume.svg" alt="" width="48" height="48"><strong>Igor Rybakov</strong></div>
+          <div class="resume-progress" id="resumeProgress" role="progressbar" aria-label="Preparing resume" aria-valuemin="0" aria-valuemax="100"><div id="resumeProgressFill"></div></div>
+          <p id="resumeError" role="alert" hidden></p>
+          <div class="resume-actions"><button id="resumeDownload" disabled>Download</button></div>
+        </div>
+        <div class="status-bar"><p class="status-bar-field" id="resumeFooter">99% of HR stop looking for candidates before finding “the right one”.</p></div>
       </div>
 
       <div class="taskbar">

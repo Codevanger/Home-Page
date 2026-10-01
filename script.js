@@ -1,12 +1,13 @@
-document.onreadystatechange = (event) => {
-  if (document.readyState !== "complete") return;
+document.addEventListener("DOMContentLoaded", () => {
 
+  initResume();
   initWindows();
   initTabs();
   initTime();
-};
+}, { once: true });
 
 const WINDOW_CONFIGS = [
+  { id: "resume", label: "Resume", icon: "icons/resume.svg", closable: true, minimizable: true, visible: false },
   {
     id: "aboutMe",
     label: "About me",
@@ -101,6 +102,18 @@ function initDesktopIcons(manager, container) {
     const icon = document.createElement("div");
     icon.className = "desktop-icon";
     icon.dataset.windowId = win.config.id;
+    icon.tabIndex = 0;
+    icon.setAttribute("role", "button");
+    icon.setAttribute("aria-label", win.config.label);
+    icon.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        manager.show(win.config.id);
+      }
+    });
+    icon.addEventListener("pointerup", (event) => {
+      if (event.pointerType === "touch") manager.show(win.config.id);
+    });
 
     const img = document.createElement("img");
     img.src = win.config.icon;
@@ -147,10 +160,11 @@ function createWindowManager(configs, taskbarContainer) {
     win.state = newState;
     if (newState === "open") {
       win.element.style.display = "";
+      win.element.dispatchEvent(new Event("window:open"));
     } else {
       win.element.style.display = "none";
+      win.element.dispatchEvent(new Event("window:hide"));
       win.element.classList.remove("active");
-      win.element.style.zIndex = 0;
     }
   }
 
@@ -164,7 +178,6 @@ function createWindowManager(configs, taskbarContainer) {
     if (target.state === "minimized") setState(target, "open");
     for (const w of windows) {
       const isTarget = w === target;
-      w.element.style.zIndex = isTarget ? 1000 : 0;
       w.element.classList.toggle("active", isTarget);
     }
     render();
@@ -193,7 +206,6 @@ function createWindowManager(configs, taskbarContainer) {
 
   function unfocusAll() {
     for (const w of windows) {
-      w.element.style.zIndex = 0;
       w.element.classList.remove("active");
     }
     render();

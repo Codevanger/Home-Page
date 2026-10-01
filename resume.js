@@ -13,6 +13,7 @@ function initResume() {
     failed = false;
   function stop() {
     sequence++;
+    if (active) SiteAnalytics.event('resume_prepare_cancelled');
     active?.abort();
     active = null;
   }
@@ -26,14 +27,18 @@ function initResume() {
   async function prepare() {
     stop();
     const token = sequence;
+    const started = performance.now();
+    let stage = 'fetch';
     failed = false;
     error.hidden = true;
     download.textContent = "Download";
     download.disabled = true;
     if (pdfURL) {
+      SiteAnalytics.event('resume_cache_hit');
       ready();
       return;
     }
+    SiteAnalytics.event('resume_prepare_started');
     progress.classList.add("indeterminate");
     progress.removeAttribute("aria-valuenow");
     fill.style.width = "";
@@ -77,6 +82,9 @@ function initResume() {
       }
       const content = await new Blob(chunks).text();
       if (token !== sequence) return;
+      SiteAnalytics.event('resume_data_loaded');
+      SiteAnalytics.duration('resume_fetch_time', performance.now() - started);
+      stage = 'pdf';
       progress.setAttribute("aria-label", "Preparing PDF");
       await new Promise((resolve) =>
         requestAnimationFrame(() => requestAnimationFrame(resolve)),
@@ -86,9 +94,12 @@ function initResume() {
       const pdf = ResumePDF.create(resume);
       if (token !== sequence) return;
       pdfURL = URL.createObjectURL(pdf);
+      SiteAnalytics.event('resume_pdf_ready');
+      SiteAnalytics.duration('resume_prepare_time', performance.now() - started);
       ready();
     } catch (e) {
       if (token !== sequence) return;
+      SiteAnalytics.event('resume_error_' + (controller.signal.aborted ? 'timeout' : stage));
       failed = true;
       progress.classList.remove("indeterminate");
       progress.setAttribute("aria-label", "Resume unavailable");
@@ -106,10 +117,12 @@ function initResume() {
   win.addEventListener("window:hide", stop);
   download.addEventListener("click", () => {
     if (failed) {
+      SiteAnalytics.event('resume_retry');
       prepare();
       return;
     }
     if (!pdfURL) return;
+    SiteAnalytics.event('resume_download_click');
     const a = document.createElement("a");
     a.href = pdfURL;
     a.download = "Igor-Rybakov-Resume.pdf";

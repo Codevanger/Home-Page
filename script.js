@@ -157,7 +157,13 @@ function createWindowManager(configs, taskbarContainer) {
   for (const w of windows) setState(w, w.state);
 
   function setState(win, newState) {
+    const previous = win.state;
+    const wasActive = win.element.classList.contains("active");
     win.state = newState;
+    if (newState !== previous) {
+      SiteAnalytics.event('window_' + (newState === 'open' ? (previous === 'minimized' ? 'restore' : 'open') : newState === 'minimized' ? 'minimize' : 'close') + '_' + win.config.id);
+    }
+    if (newState !== 'open' && wasActive) SiteAnalytics.focus(null);
     if (newState === "open") {
       win.element.style.display = "";
       win.element.dispatchEvent(new Event("window:open"));
@@ -176,6 +182,7 @@ function createWindowManager(configs, taskbarContainer) {
     const target = get(id);
     if (!target || target.state === "closed") return;
     if (target.state === "minimized") setState(target, "open");
+    SiteAnalytics.focus(id);
     for (const w of windows) {
       const isTarget = w === target;
       w.element.classList.toggle("active", isTarget);
@@ -205,6 +212,7 @@ function createWindowManager(configs, taskbarContainer) {
   }
 
   function unfocusAll() {
+    SiteAnalytics.focus(null);
     for (const w of windows) {
       w.element.classList.remove("active");
     }
@@ -282,6 +290,7 @@ function initTabs() {
     tabButtons.forEach((btn) =>
       btn.addEventListener("click", (e) => {
         e.preventDefault();
+        if (btn.getAttribute('aria-selected') !== 'true') SiteAnalytics.event('tab_open_' + btn.getAttribute('aria-controls'));
 
         tabButtons.forEach((button) => {
           if (

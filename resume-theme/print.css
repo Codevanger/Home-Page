@@ -1,0 +1,25 @@
+/* Print-only adjustments to Even 0.26.1; no manual page coordinates. */
+@page { size: Letter; margin: 14mm 16mm; }
+@media print {
+  :root { color-scheme: light; --color-background: #fff; --color-dimmed: #f3f4f5; --color-primary: #191e23; --color-secondary: #505860; --color-accent: #0073aa; }
+  html { font-size: 10pt; }
+  body { display: block; margin: 0; font-family: Arial, sans-serif; }
+  body::before { display: none; }
+  .masthead { display: block; padding: 0 0 1em; background: transparent; }
+  .masthead > * + * { margin-top: .7em; }
+  h1 { font-size: 26pt; } h2 { font-size: 14pt; }
+  section { display: block; margin-top: 1.3em; }
+  h3 { font-size: 13pt; text-align: left; border-bottom: 1px solid #ccd0d4; padding-bottom: .3em; margin-bottom: .7em; }
+  h4 { font-size: 11pt; } h5 { font-size: 10pt; }
+  .stack { display: block; }
+  .stack > * + * { margin-top: 1.1em; }
+  .icon-list { flex-direction: row; justify-content: flex-start; }
+  .grid-list { display: block; }
+  .grid-list > * + * { margin-top: .65em; }
+  h3, article > header, .timeline > div > div:first-child { break-after: avoid; break-inside: avoid; }
+  article, .timeline, .timeline > div, ul { break-inside: auto; }
+  li, p { orphans: 2; widows: 2; }
+  li { break-inside: avoid; }
+  a { overflow-wrap: anywhere; }
+  time-duration { display: none; }
+}

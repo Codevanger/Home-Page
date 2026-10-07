@@ -6,7 +6,7 @@
   async function resource(path,binary=false){const r=await fetch(url(path));if(!r.ok)throw Error('Could not load '+path);return binary?new Uint8Array(await r.arrayBuffer()):r.text();}
   function load(){
     if(!assets)assets=Promise.all([
-      import(url('vendor/resume/even.mjs')),
+      import(url('vendor/resume/even.js')),
       script('vendor/resume/dompdf.min.js'),script('vendor/resume/purify.min.js'),
       resource('resume-theme/print.css'),
       resource('resume-theme/fonts/NotoSans-Regular.ttf',true),resource('resume-theme/fonts/NotoSans-Bold.ttf',true)

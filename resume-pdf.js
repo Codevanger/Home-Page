@@ -1,140 +1,50 @@
-(function (root) {
-  function create(resume, PDF = root.jspdf.jsPDF) {
-    const doc = new PDF({ unit: "mm", format: "letter" });
-    const left = 18,
-      width = 180,
-      bottom = 258;
-    let y = 19;
-    const clean = (s) =>
-      String(s ?? "")
-        .replace(/→/g, " to ")
-        .replace(/[–—]/g, "-")
-        .replace(/[‘’]/g, "'")
-        .replace(/[“”]/g, '"')
-        .replace(/\u00a0/g, " ");
-    const space = (height) => {
-      if (y + height > bottom) {
-        doc.addPage();
-        y = 19;
-      }
-    };
-    function text(value, size = 10, bold = false, indent = 0) {
-      doc.setFont("helvetica", bold ? "bold" : "normal");
-      doc.setFontSize(size);
-      doc.setTextColor(30);
-      const lines = doc.splitTextToSize(clean(value), width - indent);
-      const lineHeight = size * 0.43;
-      if (lines.length * lineHeight < bottom - 20)
-        space(lines.length * lineHeight);
-      for (const line of lines) {
-        space(lineHeight);
-        doc.text(line, left + indent, y);
-        y += lineHeight;
-      }
-      y += 1.6;
-    }
-    function section(title) {
-      space(22);
-      y += 3;
-      text(title.toUpperCase(), 10, true);
-      doc.setDrawColor(30);
-      doc.setLineWidth(0.2);
-      doc.line(left, y - 1, left + width, y - 1);
-      y += 4;
-    }
-    text(resume.basics.name, 24, true);
-    text(resume.basics.label, 11, true);
-    text(
-      resume.basics.email +
-        " | " +
-        resume.basics.location.city +
-        ", " +
-        resume.basics.location.countryCode,
-      9,
-    );
-    text("Remote work | Open to international relocation", 9);
-    section("Profile");
-    text(resume.basics.summary);
-    section("Experience");
-    for (const job of resume.work) {
-      space(job["x-rolePeriods"] ? 55 : 34);
-      const dates = job.startDate + " - " + (job.endDate || "Present");
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(9);
-      const dateWidth = doc.getTextWidth(dates);
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(11);
-      const companyLines = doc.splitTextToSize(
-        clean(job.name),
-        width - dateWidth - 8,
-      );
-      doc.setTextColor(30);
-      doc.text(companyLines, left, y, { lineHeightFactor: 1.22 });
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(9);
-      doc.text(dates, left + width, y, { align: "right" });
-      y += companyLines.length * 4.8 + 1.6;
-      text(job.position, 10, true);
-      text(job.summary);
-      for (const period of job["x-rolePeriods"] || [])
-        text(
-          period.position + ": " + period.startDate + " - " + period.endDate,
-          9,
-        );
-      for (const period of job["x-employerPeriods"] || [])
-        text(period.name + ": " + period.startDate + " - " + period.endDate, 9);
-      for (const highlight of job.highlights) {
-        space(14);
-        text("- " + highlight, 10, false, 2);
-      }
-      for (const exposure of job["x-skillExposure"] || [])
-        text(exposure.skill + ": " + exposure.scope.replace(/_/g, " "), 9);
-      y += 3;
-    }
-    section("Skills");
-    for (const skill of resume.skills)
-      text(skill.name + ": " + skill.keywords.join(", "));
-    section("Projects");
-    for (const project of resume.projects) {
-      space(24);
-      text(project.name, 11, true);
-      text(project.description);
-      text(project.url, 8);
-      if (project.roles?.length) text("Role: " + project.roles.join(", "), 9);
-      if (project.keywords?.length)
-        text("Technologies: " + project.keywords.join(", "), 9);
-      if (project["x-status"])
-        text("Status: " + project["x-status"].replace(/_/g, " "), 9);
-      if (project["x-releaseDate"])
-        text("Release date: " + project["x-releaseDate"], 9);
-    }
-    section("Publications");
-    for (const publication of resume.publications) {
-      space(24);
-      text(publication.name, 11, true);
-      text(publication.publisher + " | " + publication.releaseDate, 9);
-      text(publication.summary);
-      text(publication.url, 8);
-    }
-    section("Languages");
-    for (const language of resume.languages)
-      text(language.language + ": " + language.fluency);
-    section("Learning");
-    text(resume["x-learning"]);
-    const pages = doc.getNumberOfPages();
-    for (let page = 1; page <= pages; page++) {
-      doc.setPage(page);
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(8);
-      doc.setTextColor(100);
-      doc.text(`${page} / ${pages}`, 198, 269, { align: "right" });
-    }
-    doc.setProperties({
-      title: resume.basics.name + " - Resume",
-      author: resume.basics.name,
-    });
-    return doc.output("blob");
+(function(root){
+  const base = new URL('.', document.currentScript.src);
+  let assets;
+  const url = p => new URL(p,base).href;
+  function script(path){return new Promise((resolve,reject)=>{const el=document.createElement('script');el.src=url(path);el.onload=resolve;el.onerror=()=>{el.remove();reject(Error('Could not load PDF engine'));};document.head.appendChild(el);});}
+  async function resource(path,binary=false){const r=await fetch(url(path));if(!r.ok)throw Error('Could not load '+path);return binary?new Uint8Array(await r.arrayBuffer()):r.text();}
+  function load(){
+    if(!assets)assets=Promise.all([
+      import(url('vendor/resume/even.mjs')),
+      script('vendor/resume/dompdf.min.js'),script('vendor/resume/purify.min.js'),
+      resource('resume-theme/print.css'),
+      resource('resume-theme/fonts/NotoSans-Regular.ttf',true),resource('resume-theme/fonts/NotoSans-Bold.ttf',true)
+    ]).catch(e=>{assets=null;throw e;});
+    return assets;
   }
-  root.ResumePDF = { create };
-  if (typeof module !== "undefined") module.exports = root.ResumePDF;
+  function base64(bytes){let s='';for(let i=0;i<bytes.length;i+=32768)s+=String.fromCharCode(...bytes.subarray(i,i+32768));return btoa(s);}
+  async function create(resume,{signal,onProgress=()=>{}}={}){
+    const check=()=>{if(signal?.aborted)throw new DOMException('Cancelled','AbortError');};
+    check();onProgress({stage:'assets'});
+    const [theme,,,css,regular,bold]=await load();check();
+    const data=ResumeThemeData.escapeData(ResumeThemeData.adapt(resume));
+    const html=DOMPurify.sanitize(theme.render(data),{WHOLE_DOCUMENT:true,FORBID_TAGS:['script','link','img','iframe','object','embed'],FORBID_ATTR:['style']});
+    const parsed=new DOMParser().parseFromString(html,'text/html');
+    const policy=parsed.createElement('meta');policy.httpEquiv='Content-Security-Policy';policy.content="default-src 'none'; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'";parsed.head.prepend(policy);
+    const style=parsed.createElement('style');
+    style.textContent=css.replace('@media print {','@media screen, print {')+`
+      @font-face{font-family:ResumeSans;src:url(data:font/ttf;base64,${base64(regular)});font-weight:400}
+      @font-face{font-family:ResumeSans;src:url(data:font/ttf;base64,${base64(bold)});font-weight:700}
+      html,body{font-family:ResumeSans,sans-serif!important} body{width:100%;padding:0} .icon-list svg{display:none} .masthead{text-align:left} li::marker{content:"- "} .icon-list>li::marker,.tag-list>li::marker{content:""}
+    `;
+    parsed.head.append(style);
+    const frame=document.createElement('iframe');frame.setAttribute('sandbox','allow-same-origin');frame.setAttribute('aria-hidden','true');frame.tabIndex=-1;frame.style.cssText='position:fixed;left:-12000px;top:0;width:695px;height:1000px;border:0;pointer-events:none;';
+    try{
+      const loaded=new Promise((resolve,reject)=>{frame.onload=resolve;frame.onerror=()=>reject(Error('Could not prepare resume layout'));});
+      frame.srcdoc='<!doctype html>'+parsed.documentElement.outerHTML;document.body.append(frame);await loaded;check();
+      const doc=frame.contentDocument;
+      await Promise.all([doc.fonts.load('400 10pt ResumeSans'),doc.fonts.load('700 10pt ResumeSans')]);await doc.fonts.ready;check();
+      const engine=typeof root.dompdf==='function'?root.dompdf:root.dompdf.default;
+      const pdf=await engine(doc.body,{
+        format:'letter',marginPt:[40,45,40,45],pagination:true,compress:true,putOnlyUsedFonts:true,backgroundColor:'#ffffff',
+        fontConfig:[{fontFamily:'ResumeSans',fontBytes:regular,fontWeight:400},{fontFamily:'ResumeSans',fontBytes:bold,fontWeight:700}],
+        metadata:{title:resume.basics.name+' — Resume',author:resume.basics.name},
+        onProgress:p=>{if(!signal?.aborted)onProgress(p);}
+      });
+      check();if(!(pdf instanceof Blob)||await pdf.slice(0,5).text()!=='%PDF-')throw Error('Invalid generated PDF');
+      return pdf;
+    }finally{frame.remove();}
+  }
+  root.ResumePDF={create};
 })(globalThis);

@@ -53,6 +53,7 @@ function initResume() {
         credentials: "omit",
       });
       if (!response.ok) throw Error("Fetch failed");
+      const total = Number(response.headers.get("content-length"));
       const chunks = [];
       let bytes = 0;
       if (response.body) {
@@ -70,6 +71,12 @@ function initResume() {
             throw Error("Too large");
           }
           chunks.push(value);
+          if (total > 0) {
+            const percent = Math.min(30, Math.round(bytes / total * 30));
+            progress.classList.remove("indeterminate");
+            progress.setAttribute("aria-valuenow", String(percent));
+            fill.style.width = percent + "%";
+          }
           progress.setAttribute(
             "aria-label",
             `Downloading resume data: ${Math.ceil(bytes / 1024)} KB`,
@@ -90,8 +97,22 @@ function initResume() {
         requestAnimationFrame(() => requestAnimationFrame(resolve)),
       );
       if (token !== sequence) return;
-      const resume = ResumeData.build(JSON.parse(content), "en");
-      const pdf = ResumePDF.create(resume);
+      clearTimeout(timeout);
+      progress.classList.add("indeterminate");
+      progress.removeAttribute("aria-valuenow");
+      const pdf = await ResumePDF.create(ResumeData.build(JSON.parse(content), "en"), {
+        signal: controller.signal,
+        onProgress: (p) => {
+          if (token !== sequence) return;
+          progress.setAttribute("aria-label", p.stage === 'assets' ? 'Loading PDF engine' : 'Preparing PDF');
+          if (p.stage === 'rendering' && p.totalPages > 0 && p.currentPage > 0) {
+            const percent = 35 + Math.min(64, Math.round(p.currentPage / p.totalPages * 64));
+            progress.classList.remove("indeterminate");
+            progress.setAttribute("aria-valuenow", String(percent));
+            fill.style.width = percent + "%";
+          }
+        }
+      });
       if (token !== sequence) return;
       pdfURL = URL.createObjectURL(pdf);
       SiteAnalytics.event('resume_pdf_ready');

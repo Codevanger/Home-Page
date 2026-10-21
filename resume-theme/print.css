@@ -17,7 +17,12 @@
   .grid-list { display: block; }
   .grid-list > * + * { margin-top: .65em; }
   h3, article > header, .timeline > div > div:first-child { break-after: avoid; break-inside: avoid; }
-  article, .timeline, .timeline > div, ul { break-inside: auto; }
+  .timeline, .timeline > div, ul { break-inside: auto; }
+  /* dompdf must be able to split work entries below the introductory header. */
+  article { break-inside: auto; }
+  .grid-list > div, .tag-list { break-inside: avoid; }
+  h4, h5, .timeline > div > p { break-after: avoid; }
+  .timeline > div > ul:not(.tag-list) { break-after: avoid; }
   li, p { orphans: 2; widows: 2; }
   li { break-inside: avoid; }
   a { overflow-wrap: anywhere; }

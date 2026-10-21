@@ -74,6 +74,7 @@
               [name]: local(period[name]),
             }));
         }
+        if (job.skills) item['x-technologies'] = [...job.skills];
         if (job.skillExposure) item["x-skillExposure"] = job.skillExposure;
         return item;
       }),
@@ -112,7 +113,7 @@
           data.preferences.openToInternationalRelocation,
         targetMarket: data.preferences.markets[locale],
       },
-      "x-learning": local(p.learning),
+      ...(p.learning ? { "x-learning": local(p.learning) } : {}),
     };
     if (data.preferences.compensation[locale])
       resume["x-preferences"].compensation =

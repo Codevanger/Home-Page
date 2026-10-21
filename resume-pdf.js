@@ -19,7 +19,7 @@
     check();onProgress({stage:'assets'});
     const [theme,,,css,regular,bold]=await load();check();
     const data=ResumeThemeData.escapeData(ResumeThemeData.adapt(resume));
-    const html=DOMPurify.sanitize(theme.render(data),{WHOLE_DOCUMENT:true,FORBID_TAGS:['script','link','img','iframe','object','embed'],FORBID_ATTR:['style']});
+    const html=DOMPurify.sanitize(ResumeThemeData.technologyLists(theme.render(data),resume),{WHOLE_DOCUMENT:true,FORBID_TAGS:['script','link','img','iframe','object','embed'],FORBID_ATTR:['style']});
     const parsed=new DOMParser().parseFromString(html,'text/html');
     const policy=parsed.createElement('meta');policy.httpEquiv='Content-Security-Policy';policy.content="default-src 'none'; style-src 'unsafe-inline'; font-src data:; base-uri 'none'; form-action 'none'";parsed.head.prepend(policy);
     const style=parsed.createElement('style');

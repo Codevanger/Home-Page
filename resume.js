@@ -120,6 +120,7 @@ function initResume() {
       ready();
     } catch (e) {
       if (token !== sequence) return;
+      console.error("Resume preparation failed at stage: " + stage, e);
       SiteAnalytics.event('resume_error_' + (controller.signal.aborted ? 'timeout' : stage));
       failed = true;
       progress.classList.remove("indeterminate");

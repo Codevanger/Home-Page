@@ -29,24 +29,8 @@ export class ExperienceProject {
 
   static async icon(source) {
     const url = new URL(source.url);
-    const steamMatch =
-      url.hostname.match(/(?:^|\.)steampowered\.com$/) &&
-      url.pathname.match(/^\/app\/(\d+)/);
-    if (steamMatch) {
-      const appId = steamMatch[1];
-      try {
-        const response = await fetch(
-          `https://store.steampowered.com/api/appdetails?appids=${appId}`,
-          { cache: 'no-cache', credentials: 'omit' },
-        );
-        if (!response.ok) throw Error('Steam appdetails failed');
-        const payload = await response.json();
-        const image = payload[appId]?.data?.header_image;
-        if (image) return image;
-      } catch {
-        // Use the stable Steam CDN image when appdetails is unavailable.
-      }
-      return `https://cdn.cloudflare.steamstatic.com/steam/apps/${appId}/header.jpg`;
+    if (url.hostname.match(/(?:^|\.)steampowered\.com$/)) {
+      return 'https://store.steampowered.com/favicon.ico';
     }
 
     if (url.hostname === 'www.npmjs.com') {

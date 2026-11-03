@@ -2,6 +2,12 @@
 
 It's small, but honest work
 
+## Resume data
+
+Resume data is loaded from the GitHub API, then the raw GitHub URL, with the `resume-source` Git submodule as a local fallback.
+
+Clone with `git clone --recurse-submodules`, or run `git submodule update --init --recursive` in an existing clone. To update the fallback data, run `git submodule update --remote resume-source` and commit the updated submodule reference.
+
 ## License
 
 The Windows XP name, artwork, trademark are surely property of Microsoft.

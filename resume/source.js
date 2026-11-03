@@ -1,8 +1,11 @@
 import { ResumeDataAdapter } from './data.js';
 
 export class ResumeSource {
-  static URL =
-    'https://api.github.com/repos/Codevanger/Codevanger/contents/resume.json';
+  static URLS = [
+    'https://api.github.com/repos/Codevanger/Codevanger/contents/resume.json',
+    'https://raw.githubusercontent.com/Codevanger/Codevanger/main/resume.json',
+    './resume-source/resume.json',
+  ];
 
   constructor() {
     this.promise = null;
@@ -19,13 +22,25 @@ export class ResumeSource {
   }
 
   async fetchData() {
-    const response = await fetch(ResumeSource.URL, {
+    const errors = [];
+    for (const url of ResumeSource.URLS) {
+      try {
+        return await this.fetchSource(url);
+      } catch (error) {
+        errors.push(error);
+      }
+    }
+    throw new AggregateError(errors, 'Could not load resume data');
+  }
+
+  async fetchSource(url) {
+    const response = await fetch(url, {
       cache: 'no-cache',
       credentials: 'omit',
       headers: { Accept: 'application/vnd.github.raw+json' },
       signal: AbortSignal.timeout(30000),
     });
-    if (!response.ok) throw Error('Could not load resume data');
+    if (!response.ok) throw Error(`Could not load resume data from ${url}`);
     const content = await response.text();
     if (new Blob([content]).size > 2 * 1024 * 1024) {
       throw Error('Resume data is too large');

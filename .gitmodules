@@ -1,0 +1,4 @@
+[submodule "resume-source"]
+	path = resume-source
+	url = https://github.com/Codevanger/Codevanger.git
+	branch = main

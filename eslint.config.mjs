@@ -3,7 +3,7 @@ import globals from 'globals';
 
 export default [
   {
-    ignores: ['node_modules/**', 'vendor/**'],
+    ignores: ['node_modules/**', 'vendor/**', 'resume-source/**'],
   },
   js.configs.recommended,
   {

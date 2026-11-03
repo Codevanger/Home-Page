@@ -1,16 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <title>CodeVanger Homepage</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://unpkg.com/xp.css" />
+    <link rel="stylesheet" href="https://unpkg.com/xp.css@0.2.6" />
     <link rel="stylesheet" href="./style.css" />
     <script src="./analytics.js"></script>
-    <script src="./resume-data.js"></script>
     <script src="./resume-theme/adapter.js"></script>
-    <script src="./resume-pdf.js?v=even-2"></script>
-    <script src="./resume.js"></script>
+    <script type="module" src="./content.js"></script>
+    <script type="module" src="./resume.js"></script>
+    <script type="module" src="./experience.js"></script>
     <script src="./script.js"></script>
   </head>
 
@@ -37,62 +37,16 @@
             </menu>
             <article role="tabpanel" id="General">
               <h3>Hello! 👋</h3>
-
-              <p>My name is <b>Igor</b>. I'm from Kaliningrad, Russia.</p>
-              <p>
-                I'm a <b>TypeScript / JavaScript</b> engineer with <b>8 years</b>
-                experience.
-              </p>
-
-              <p>
-                I'm a
-                <b>full-stack</b> developer, but I prefer to work on
-                <b>frontend</b> side.
-              </p>
-
-              <p>
-                I write <b>Rust/WASM</b> when JavaScript isn't enough.
-              </p>
-
-              <p>My favorite game — Vangers</p>
+              <div id="aboutGeneral"></div>
             </article>
 
             <article role="tabpanel" id="Hobbies" hidden>
-              <ul>
-                <li>Programming 💻</li>
-                <li>Gaming 🎮</li>
-                <li>Board games 🎲</li>
-                <li>Plastic modeling 🛠</li>
-                <li>Reading 📖</li>
-              </ul>
+              <ul id="aboutInterests"></ul>
             </article>
 
             <article role="tabpanel" id="Contacts" hidden>
               <b>You can find or contact me here</b>
-              <ul>
-                <li>
-                  <a href="https://github.com/Codevanger" target="_blank">
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a href="https://t.me/codevanger" target="_blank">Telegram</a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.linkedin.com/in/codevanger/"
-                    target="_blank"
-                  >
-                    LinkedIn
-                  </a>
-                </li>
-                <li>
-                  <a href="mailto:me@codevanger.su">Email</a> — me@codevanger.su
-                </li>
-                <li>
-                  <a href="mailto:codevanger@gmail.com">Gmail</a> — codevanger@gmail.com
-                </li>
-              </ul>
+              <ul id="aboutContacts"></ul>
             </article>
           </section>
         </div>
@@ -113,72 +67,10 @@
         </div>
         <div class="window-body">
           <h4>There's list of my <b>Personal</b> projects</h4>
-
-          <ul class="tree-view">
-            <li>
-              <b>TypeMUD</b> — MUD / Roguelike platform, written in TypeScript.
-              <ul>
-                <li><a href="https://github.com/Codevanger/TypeMUD-Client" target="_blank"><b>Client</b></a> — Angular, Electron</li>
-                <li><a href="https://github.com/Codevanger/TypeMUD-Instance" target="_blank"><b>Server</b></a> — Deno, WebSocket</li>
-                <li><a href="https://github.com/Codevanger/TypeMUD-WebAPI" target="_blank"><b>WebAPI</b></a> — NestJS, TypeORM</li>
-              </ul>
-            </li>
-            <li>
-              <b><a href="https://store.steampowered.com/app/4620980/Nights_of_the_Sleeping_God/" target="_blank">Nights of the Sleeping God</a></b> — creator of the game on Steam.
-            </li>
-            <li>
-              <b><a href="https://github.com/Codevanger/active-inference" target="_blank">Active Inference</a></b> — JavaScript implementation of Active Inference Framework, written in TypeScript.
-            </li>
-            <li>
-              <b>This site!</b> — Personal site with
-              <b><a href="https://github.com/botoxparty/XP.css" target="_blank">XP.css</a></b>
-            </li>
-          </ul>
+          <ul class="tree-view" id="aboutProjectsList"></ul>
 
           <h4>Technologies</h4>
-
-          <ul class="tree-view">
-            <li>
-              <b>Frontend</b>
-              <ul>
-                <li>Angular</li>
-                <li>TypeScript</li>
-                <li>RxJS</li>
-                <li>Electron</li>
-              </ul>
-            </li>
-            <li>
-              <b>Backend</b>
-              <ul>
-                <li>Node.js</li>
-                <li>NestJS</li>
-                <li>Deno</li>
-              </ul>
-            </li>
-            <li>
-              <b>Performance</b>
-              <ul>
-                <li>Rust</li>
-                <li>WebAssembly</li>
-              </ul>
-            </li>
-            <li>
-              <b>Database</b>
-              <ul>
-                <li>PostgreSQL</li>
-                <li>MS SQL</li>
-                <li>SQLite</li>
-              </ul>
-            </li>
-            <li>
-              <b>DevOps</b>
-              <ul>
-                <li>Docker</li>
-                <li>Linux</li>
-                <li>Nginx</li>
-              </ul>
-            </li>
-          </ul>
+          <ul class="tree-view" id="aboutSkillsList"></ul>
         </div>
       </div>
 
@@ -199,21 +91,78 @@
         </div>
       </div>
 
-      <div class="window resume-window" id="resume" style="display: none" role="dialog" aria-labelledby="resumeTitle" lang="en">
+      <div
+        class="window resume-window"
+        id="resume"
+        style="display: none"
+        role="dialog"
+        aria-labelledby="resumeTitle"
+        lang="en"
+      >
         <div class="title-bar">
-          <div class="title-bar-text" id="resumeTitle">Resume — Igor Rybakov</div>
-          <div class="title-bar-controls"><button aria-label="Minimize"></button><button aria-label="Close"></button></div>
+          <div class="title-bar-text" id="resumeTitle">Resume</div>
+          <div class="title-bar-controls">
+            <button aria-label="Minimize"></button
+            ><button aria-label="Close"></button>
+          </div>
         </div>
         <div class="window-body">
-          <div class="resume-heading"><img src="icons/resume.svg" alt="" width="48" height="48"><strong>Igor Rybakov</strong></div>
-          <div class="resume-progress" id="resumeProgress" role="progressbar" aria-label="Preparing resume" aria-valuemin="0" aria-valuemax="100"><div id="resumeProgressFill"></div></div>
+          <div class="resume-heading">
+            <img src="icons/resume.svg" alt="" width="48" height="48" /><strong
+              id="resumeName"
+            ></strong>
+          </div>
+          <div class="resume-field">
+            <label for="resumeVacancy">Vacancy text</label>
+            <textarea
+              id="resumeVacancy"
+              rows="5"
+              maxlength="20000"
+              placeholder="Paste the vacancy requirements here"
+            ></textarea>
+            <p class="resume-hint">
+              With vacancy text, BM25 selects relevant experience and compresses
+              the PDF to two pages.
+            </p>
+          </div>
+          <div class="resume-field">
+            <label for="resumeLanguage">Resume language</label>
+            <select id="resumeLanguage">
+              <option value="en">English</option>
+              <option value="ru">Русский</option>
+            </select>
+          </div>
+          <div class="resume-match" id="resumeMatch" role="status" hidden>
+            <strong id="resumeMatchScore"></strong>
+            <progress id="resumeMatchBar" max="100" value="0"></progress>
+            <p id="resumeMatchDetails"></p>
+          </div>
+          <div
+            class="resume-progress"
+            id="resumeProgress"
+            role="progressbar"
+            aria-label="Preparing resume"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            <div id="resumeProgressFill"></div>
+          </div>
           <p id="resumeError" role="alert" hidden></p>
-          <div class="resume-actions"><button id="resumeDownload" disabled>Download</button></div>
+          <div class="resume-actions">
+            <button id="resumeAnalyze">Check match</button>
+            <button id="resumeGenerate" disabled>Download tailored</button>
+            <button id="resumeDownload">Download full</button>
+          </div>
         </div>
-        <div class="status-bar"><p class="status-bar-field" id="resumeFooter">99% of HR stop looking for candidates before finding “the right one”.</p></div>
+        <div class="status-bar">
+          <p class="status-bar-field" id="resumeFooter"></p>
+        </div>
       </div>
 
       <div class="taskbar">
+        <button class="pocket-start" id="pocketStart" type="button">
+          Start
+        </button>
         <div class="taskbar-buttons" id="taskbarButtons"></div>
         <div class="time">
           <span id="time">0:00</span>

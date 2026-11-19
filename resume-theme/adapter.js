@@ -30,10 +30,7 @@
         ...(job['x-employerPeriods'] || []).map(
           (p) => `${p.name}: ${p.startDate} - ${p.endDate || 'Present'}`,
         ),
-        (job['x-technologies'] || []).length ||
-        (job['x-skillExposure'] || []).length
-          ? `RESUME_TECHNOLOGIES_${index}`
-          : '',
+        (job['x-technologies'] || []).length
       ]
         .filter(Boolean)
         .join('\n\n');
@@ -61,10 +58,7 @@
     for (const marker of markers.reverse()) {
       const job = resume.work[Number(marker[1])];
       const names = [
-        ...new Set([
-          ...(job['x-technologies'] || []),
-          ...(job['x-skillExposure'] || []).map((p) => p.skill),
-        ]),
+        ...new Set(...job['x-technologies'] || []),
       ].filter(Boolean);
       const tags = `<ul class="tag-list">${names.map((name) => `<li>${escapeData(name)}</li>`).join('')}</ul>`;
       const start = marker.index;

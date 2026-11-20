@@ -1,0 +1,72 @@
+@use 'theme' as *;
+
+/* WinXP style */
+.taskbar {
+  z-index: 4;
+  height: 1.875rem;
+  @include xp-window-gradient;
+  position: absolute;
+  bottom: 0rem;
+  right: 0rem;
+  left: 0rem;
+  display: flex;
+
+  div.time {
+    @include xp-time-gradient;
+    width: 6.25rem;
+    height: 1.875rem;
+    position: absolute;
+    right: 0rem;
+
+    span#time {
+      color: white;
+      font-size: 0.75rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .taskbar-buttons {
+    flex: 1;
+    display: flex;
+    gap: 0.1875rem;
+    padding: 0.1875rem 6.25rem 0.1875rem 0.25rem;
+    overflow: hidden;
+    align-items: stretch;
+
+    button {
+      flex: 0 1 10rem;
+      min-width: 2.5rem;
+      color: white;
+      font-family: inherit;
+      font-size: 0.6875rem;
+      font-weight: bold;
+      text-align: left;
+      padding: 0 0.5rem;
+      border: 0.0625rem solid rgba(0, 0, 0, 0.35);
+      border-radius: 0.125rem;
+      cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      @include taskbar-button-gradient;
+      box-shadow: inset 0 0.0625rem 0 rgba(255, 255, 255, 0.35);
+
+      &.active {
+        @include taskbar-button-active-gradient;
+        box-shadow: inset 0 0.125rem 0.25rem rgba(0, 0, 0, 0.5);
+      }
+
+      &.minimized {
+        font-style: italic;
+        opacity: 0.85;
+      }
+    }
+  }
+}
+
+.pocket-start {
+  display: none;
+}

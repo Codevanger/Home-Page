@@ -1,0 +1,76 @@
+@use 'theme' as *;
+
+.experience-window {
+  position: absolute;
+  top: var(--experience-top);
+  left: min(
+    max(6.25rem, var(--experience-left)),
+    calc(100% - 32.5rem - 0.75rem)
+  );
+  width: 32.5rem;
+  max-width: calc(100vw - 1.5rem);
+  box-sizing: border-box;
+
+  @media (max-width: 43.75rem) {
+    left: 0.75rem;
+  }
+
+  .window-body {
+    max-height: calc(100dvh - 10.625rem);
+    overflow-y: auto;
+  }
+
+  fieldset {
+    margin: 0;
+    padding: 0.75rem;
+
+    & + fieldset {
+      margin-top: 0.625rem;
+    }
+  }
+
+  .status-bar-field {
+    padding: 0.3125rem 0.5rem;
+    line-height: 1.4;
+    white-space: normal;
+  }
+
+  h3 {
+    margin: 0 0 0.375rem;
+    font-size: 0.875rem;
+  }
+
+  h4 {
+    margin: 0 0 0.5rem;
+  }
+}
+
+.experience-period {
+  margin: 0 0 0.75rem;
+  color: $text-dim;
+  font-weight: bold;
+}
+
+.experience-highlights {
+  margin: 0;
+  padding-left: 1.25rem;
+
+  li + li {
+    margin-top: 0.5rem;
+  }
+}
+
+.experience-technologies {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  line-height: 1.6;
+
+  li {
+    display: inline;
+
+    & + li::before {
+      content: ' · ';
+    }
+  }
+}

@@ -1,0 +1,43 @@
+@use 'theme' as *;
+
+.about-me {
+  width: 21.875rem;
+  top: 5%;
+  left: 5%;
+
+  position: absolute;
+}
+
+.about-projects {
+  width: 34.375rem;
+  top: 25%;
+  left: min(65%, calc(100% - 34.375rem - 0.75rem));
+
+  position: absolute;
+
+  .tree-view {
+    max-height: 18.75rem;
+    overflow-y: scroll;
+  }
+}
+
+.dancing-cat {
+  width: 20.9375rem;
+  top: 50%;
+  left: 50%;
+
+  position: absolute;
+}
+
+/* Desktop icons < windows < active window < taskbar. */
+.window {
+  z-index: 2;
+
+  &.active {
+    z-index: 3;
+  }
+
+  &:not(.active) .title-bar {
+    @include xp-window-gradient;
+  }
+}

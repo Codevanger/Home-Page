@@ -1,51 +1,34 @@
 import js from '@eslint/js';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 export default [
   {
-    ignores: ['node_modules/**', 'vendor/**', 'resume-source/**'],
+    ignores: [
+      'node_modules/**',
+      'vendor/**',
+      'resume-source/**',
+      '**/*.js',
+      '**/*.js.map',
+      '_*.py',
+    ],
   },
-  js.configs.recommended,
   {
-    files: ['**/*.js'],
+    files: ['eslint.config.mjs'],
+    ...js.configs.recommended,
     languageOptions: {
       ecmaVersion: 'latest',
-      sourceType: 'script',
-      globals: {
-        ...globals.browser,
-        DOMPurify: 'readonly',
-        ResumeData: 'readonly',
-        ResumeMatcher: 'readonly',
-        ResumePDF: 'readonly',
-        ResumeSource: 'readonly',
-        ResumeThemeData: 'readonly',
-        SiteAnalytics: 'readonly',
-      },
-    },
-  },
-  {
-    files: [
-      'content.js',
-      'content/**/*.js',
-      'experience.js',
-      'experience/**/*.js',
-    ],
-    languageOptions: {
       sourceType: 'module',
+      globals: globals.node,
     },
   },
+  ...tseslint.configs.recommended,
   {
-    files: ['resume.js', 'resume-*.js', 'resume/**/*.js'],
+    files: ['**/*.ts'],
     languageOptions: {
+      ecmaVersion: 'latest',
       sourceType: 'module',
-    },
-  },
-  {
-    files: ['resume-data.js'],
-    languageOptions: {
-      globals: {
-        module: 'readonly',
-      },
+      globals: globals.browser,
     },
   },
 ];

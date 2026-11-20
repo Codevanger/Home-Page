@@ -1,0 +1,16 @@
+// Theme-independent colors shared by all XP schemes.
+$selection-blue: rgb(11, 97, 213);
+$selection-focus: #0b61d566;
+$text-dim: #444;
+$error: #a40000;
+
+// Resume progress bar fill — green in every scheme.
+@mixin progress-fill-gradient {
+  background:
+    repeating-linear-gradient(
+      to right,
+      transparent 0 0.5rem,
+      #fff 0.5rem 0.625rem
+    ),
+    linear-gradient(#b7f18c, #33b32b 45%, #278821 55%, #8cdb59);
+}

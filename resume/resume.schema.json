@@ -1,0 +1,220 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CodeVanger resume data",
+  "type": "object",
+  "required": [
+    "meta",
+    "basics",
+    "work",
+    "projects",
+    "publications",
+    "skills",
+    "x-facts"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["version"],
+      "properties": {
+        "version": { "type": "string", "minLength": 1 },
+        "lastModified": { "type": "string" }
+      }
+    },
+    "basics": {
+      "type": "object",
+      "required": ["name", "label", "email", "summary"],
+      "properties": {
+        "name": { "type": "string" },
+        "label": { "type": "string" },
+        "email": { "type": "string" },
+        "summary": { "type": "string" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "city": { "type": "string" },
+            "countryCode": { "type": "string" }
+          }
+        },
+        "profiles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["network", "username", "url"],
+            "properties": {
+              "network": { "type": "string" },
+              "username": { "type": "string" },
+              "url": { "type": "string" }
+            }
+          }
+        },
+        "x-secondaryEmail": { "type": "string" },
+        "x-about": { "type": "array", "items": { "type": "string" } },
+        "x-resumeFooter": { "type": "string" }
+      }
+    },
+    "work": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "position",
+          "startDate",
+          "summary",
+          "x-id",
+          "x-factIds"
+        ],
+        "properties": {
+          "name": { "type": "string" },
+          "position": { "type": "string" },
+          "startDate": { "type": "string" },
+          "endDate": { "type": "string" },
+          "summary": { "type": "string" },
+          "highlights": { "type": "array", "items": { "type": "string" } },
+          "url": { "type": "string" },
+          "x-id": { "type": "string", "minLength": 1 },
+          "x-factIds": {
+            "type": "array",
+            "items": { "type": "string" },
+            "uniqueItems": true
+          },
+          "x-technologies": { "type": "array", "items": { "type": "string" } },
+          "x-tips": { "type": "array", "items": { "type": "string" } },
+          "x-rolePeriods": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["startDate", "endDate", "position"],
+              "properties": {
+                "startDate": { "type": "string" },
+                "endDate": { "type": "string" },
+                "position": { "type": "string" }
+              }
+            }
+          },
+          "x-employerPeriods": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["startDate", "endDate", "name"],
+              "properties": {
+                "startDate": { "type": "string" },
+                "endDate": { "type": "string" },
+                "name": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "x-facts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "employmentId", "text"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "employmentId": { "type": "string" },
+          "text": { "type": "string" }
+        }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "url", "x-id"],
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "url": { "type": "string" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "roles": { "type": "array", "items": { "type": "string" } },
+          "x-id": { "type": "string" },
+          "x-status": { "type": "string" },
+          "x-releaseDate": { "type": "string" },
+          "x-statusAsOf": { "type": "string" },
+          "x-links": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/link" }
+          }
+        }
+      }
+    },
+    "publications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "publisher",
+          "releaseDate",
+          "url",
+          "summary",
+          "x-id"
+        ],
+        "properties": {
+          "name": { "type": "string" },
+          "publisher": { "type": "string" },
+          "releaseDate": { "type": "string" },
+          "url": { "type": "string" },
+          "summary": { "type": "string" },
+          "x-id": { "type": "string" }
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "x-id"],
+        "properties": {
+          "name": { "type": "string" },
+          "keywords": { "type": "array", "items": { "type": "string" } },
+          "x-id": { "type": "string" }
+        }
+      }
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["language", "fluency", "x-id"],
+        "properties": {
+          "language": { "type": "string" },
+          "fluency": { "type": "string" },
+          "x-id": { "type": "string" }
+        }
+      }
+    },
+    "interests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": { "name": { "type": "string" } }
+      }
+    },
+    "x-localizations": { "type": "object" },
+    "x-preferences": {
+      "type": "object",
+      "properties": {
+        "remoteOnly": { "type": "boolean" },
+        "openToInternationalRelocation": { "type": "boolean" },
+        "targetMarket": { "type": "string" },
+        "compensation": { "type": "object" }
+      }
+    }
+  },
+  "definitions": {
+    "link": {
+      "type": "object",
+      "required": ["name", "url"],
+      "properties": {
+        "name": { "type": "string" },
+        "url": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    }
+  }
+}

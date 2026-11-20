@@ -1,0 +1,32 @@
+@forward 'themes/common';
+
+// Theme values live in CSS custom properties (see styles/themes/),
+// so they can switch at runtime via [data-theme] on <html>.
+
+// WinXP gradient shared by the taskbar and inactive title bars.
+@mixin xp-window-gradient {
+  background: var(--window-gradient);
+}
+
+// Clock tray on the taskbar.
+@mixin xp-time-gradient {
+  background: var(--time-gradient);
+}
+
+// Taskbar buttons.
+@mixin taskbar-button-gradient {
+  background: var(--taskbar-button-gradient);
+}
+
+@mixin taskbar-button-active-gradient {
+  background: var(--taskbar-button-active-gradient);
+}
+
+// Mobile (pocket) chrome.
+@mixin pocket-taskbar-gradient {
+  background: var(--pocket-taskbar-gradient);
+}
+
+@mixin pocket-start-gradient {
+  background: var(--pocket-start-gradient);
+}

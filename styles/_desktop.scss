@@ -1,0 +1,73 @@
+@use 'theme' as *;
+
+.desktop-icons {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: grid;
+  grid-auto-rows: 5rem;
+  grid-auto-columns: 5.5rem;
+  gap: 0.5rem 0.25rem;
+  height: calc(100dvh - 3.375rem);
+  z-index: 1;
+
+  .desktop-icon {
+    width: 5rem;
+    padding: 0.25rem 0.125rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    cursor: pointer;
+    border: 0.0625rem dotted transparent;
+    user-select: none;
+    touch-action: none;
+
+    &:focus-visible {
+      outline: 0.0625rem dotted white;
+      background: $selection-focus;
+    }
+
+    &.dragging {
+      z-index: 2;
+      opacity: 0.75;
+    }
+
+    &.selected {
+      border-color: rgba(255, 255, 255, 0.6);
+
+      img {
+        filter: brightness(0.85) sepia(0.4) hue-rotate(180deg) saturate(2);
+      }
+
+      span {
+        background: $selection-blue;
+      }
+    }
+
+    img {
+      width: 3rem;
+      height: 3rem;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    span {
+      color: white;
+      font-size: 0.6875rem;
+      text-align: center;
+      text-shadow: 0.0625rem 0.0625rem 0.125rem rgba(0, 0, 0, 0.9);
+      line-height: 1.2;
+      padding: 0 0.125rem;
+      pointer-events: none;
+    }
+  }
+}
+
+.desktop-selection {
+  position: absolute;
+  z-index: 1;
+  border: 0.0625rem dotted white;
+  background: rgba($selection-blue, 0.25);
+  pointer-events: none;
+}

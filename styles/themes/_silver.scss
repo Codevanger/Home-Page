@@ -1,0 +1,53 @@
+// Luna Silver (Metallic).
+[data-theme='silver'] {
+  --window-gradient: linear-gradient(
+    rgb(124, 124, 148) 0rem,
+    rgb(158, 158, 180) 3%,
+    rgb(170, 170, 191) 6%,
+    rgb(181, 181, 200) 10%,
+    rgb(172, 172, 192) 12%,
+    rgb(163, 163, 184) 15%,
+    rgb(157, 157, 179) 18%,
+    rgb(154, 154, 176) 20%,
+    rgb(153, 153, 175) 23%,
+    rgb(152, 152, 175) 38%,
+    rgb(155, 155, 178) 54%,
+    rgb(156, 156, 179) 86%,
+    rgb(155, 155, 178) 89%,
+    rgb(152, 152, 175) 92%,
+    rgb(142, 142, 165) 95%,
+    rgb(132, 132, 155) 98%
+  );
+  --time-gradient: linear-gradient(
+    rgb(122, 123, 156) 1%,
+    rgb(150, 151, 184) 6%,
+    rgb(162, 163, 196) 10%,
+    rgb(151, 152, 185) 14%,
+    rgb(147, 148, 181) 19%,
+    rgb(141, 142, 175) 63%,
+    rgb(148, 149, 182) 81%,
+    rgb(147, 148, 181) 88%,
+    rgb(146, 147, 180) 91%,
+    rgb(143, 144, 176) 94%,
+    rgb(136, 137, 168) 97%,
+    rgb(126, 127, 158) 100%
+  );
+  --taskbar-button-gradient: linear-gradient(
+    to bottom,
+    rgb(148, 148, 172) 0%,
+    rgb(117, 117, 143) 50%,
+    rgb(110, 110, 136) 51%,
+    rgb(125, 125, 151) 100%
+  );
+  --taskbar-button-active-gradient: linear-gradient(
+    to bottom,
+    rgb(70, 70, 96) 0%,
+    rgb(84, 84, 110) 50%,
+    rgb(90, 90, 117) 51%,
+    rgb(98, 98, 126) 100%
+  );
+  --pocket-taskbar-gradient: linear-gradient(#8b8ba8, #5f5f7d);
+  --pocket-start-gradient: linear-gradient(#a3a3c0, #6b6b8c);
+  --pocket-border: #d0d0e0;
+  --pocket-shadow: #2f2f45;
+}

@@ -1,0 +1,113 @@
+:root {
+  /* Typography */
+  --resume-font-size: 11pt;
+  --resume-line-height: 1.45;
+  --resume-h1: 2rem;
+  --resume-h2: 1.25rem;
+  --resume-h3: 1rem;
+
+  /* Page */
+  --resume-page-width: 940px;
+  --resume-page-padding: 20px;
+  --resume-page-margin: 18px auto;
+
+  /* Header and sections */
+  --resume-header-margin-bottom: 7.5px;
+  --resume-header-padding-bottom: 12px;
+  --resume-section-gap: 11px;
+  --resume-section-title-gap: 3.5px;
+  --resume-entry-gap: 8px;
+  --resume-paragraph-gap: 3.5px;
+  --resume-list-gap: 4px;
+
+  /* Colours */
+  --resume-page-background: #ffffff;
+  --resume-body-background: #edf0f3;
+  --resume-text: #20262e;
+  --resume-muted: #4b5563;
+}
+
+html {
+  font-size: var(--resume-font-size);
+  background: var(--resume-body-background);
+}
+
+body {
+  background: var(--resume-body-background);
+}
+
+[data-theme='one-page-essential'] {
+  max-width: var(--resume-page-width);
+  margin: var(--resume-page-margin);
+  padding: var(--resume-page-padding);
+  background: var(--resume-page-background);
+  color: var(--resume-text);
+  font-size: var(--resume-font-size) !important;
+  line-height: var(--resume-line-height) !important;
+}
+
+[data-theme='one-page-essential'],
+[data-theme='one-page-essential'] * {
+  font-size: var(--resume-font-size) !important;
+}
+
+[data-theme='one-page-essential'] h1 {
+  font-size: var(--resume-h1) !important;
+}
+
+[data-theme='one-page-essential'] h2 {
+  margin-bottom: var(--resume-section-title-gap) !important;
+  font-size: var(--resume-h2) !important;
+}
+
+[data-theme='one-page-essential'] h3 {
+  font-size: var(--resume-h3) !important;
+}
+
+[data-theme='one-page-essential'] main > header,
+[data-theme='one-page-essential'] > header {
+  margin-bottom: var(--resume-header-margin-bottom) !important;
+  padding-bottom: var(--resume-header-padding-bottom) !important;
+}
+
+[data-theme='one-page-essential'] section {
+  margin-top: var(--resume-section-gap) !important;
+}
+
+[data-theme='one-page-essential'] section:first-child {
+  margin-top: 0 !important;
+}
+
+[data-theme='one-page-essential'] article {
+  margin-top: var(--resume-entry-gap) !important;
+}
+
+[data-theme='one-page-essential'] article:first-child {
+  margin-top: 0 !important;
+}
+
+[data-theme='one-page-essential'] article > p {
+  margin-top: var(--resume-paragraph-gap) !important;
+}
+
+[data-theme='one-page-essential'] article > ul {
+  margin-top: var(--resume-list-gap) !important;
+}
+
+@page {
+  size: Letter;
+  margin: 40pt 45pt;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff;
+  }
+
+  [data-theme='one-page-essential'] {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+}

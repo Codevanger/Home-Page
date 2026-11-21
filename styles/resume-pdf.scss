@@ -6,11 +6,6 @@
   --resume-h2: 1.25rem;
   --resume-h3: 1rem;
 
-  /* Page */
-  --resume-page-width: 940px;
-  --resume-page-padding: 20px;
-  --resume-page-margin: 18px auto;
-
   /* Header and sections */
   --resume-header-margin-bottom: 7.5px;
   --resume-header-padding-bottom: 12px;
@@ -22,24 +17,22 @@
 
   /* Colours */
   --resume-page-background: #ffffff;
-  --resume-body-background: #edf0f3;
   --resume-text: #20262e;
-  --resume-muted: #4b5563;
 }
 
 html {
   font-size: var(--resume-font-size);
-  background: var(--resume-body-background);
+  background: var(--resume-page-background);
 }
 
 body {
-  background: var(--resume-body-background);
+  background: var(--resume-page-background);
 }
 
 [data-theme='one-page-essential'] {
-  max-width: var(--resume-page-width);
-  margin: var(--resume-page-margin);
-  padding: var(--resume-page-padding);
+  max-width: none;
+  margin: 0;
+  padding: 0;
   background: var(--resume-page-background);
   color: var(--resume-text);
   font-size: var(--resume-font-size) !important;
@@ -48,6 +41,7 @@ body {
 
 [data-theme='one-page-essential'],
 [data-theme='one-page-essential'] * {
+  font-family: ResumeSans, sans-serif !important;
   font-size: var(--resume-font-size) !important;
 }
 
@@ -68,6 +62,10 @@ body {
 [data-theme='one-page-essential'] > header {
   margin-bottom: var(--resume-header-margin-bottom) !important;
   padding-bottom: var(--resume-header-padding-bottom) !important;
+}
+
+[data-theme='one-page-essential'] > header > p:last-of-type {
+  max-width: 100% !important;
 }
 
 [data-theme='one-page-essential'] section {
@@ -96,18 +94,5 @@ body {
 
 @page {
   size: Letter;
-  margin: 40pt 45pt;
-}
-
-@media print {
-  html,
-  body {
-    background: #ffffff;
-  }
-
-  [data-theme='one-page-essential'] {
-    max-width: none;
-    margin: 0;
-    padding: 0;
-  }
+  margin: 20pt 45pt 40pt;
 }

@@ -98,7 +98,7 @@ export class ResumeGenerator {
         : data;
       pages = 0;
       pdf = await this.pdf.create(ResumeBuilder.build(generatedData, locale), {
-        theme: 'pro',
+        theme: 'compact',
         signal,
         onProgress,
       });
